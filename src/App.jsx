@@ -3,13 +3,14 @@ import axios from 'axios';
 import NavBar from "../src/components/NavBar/NavBar";
 import SearchResults from './components/SearchResults/SearchResults';
 import './App.css';
+import API_KEY from './YOUTUBE_API_KEY/API_KEY';
 
 
 
 function App() {
   
   const [comments, setComments] = useState([]);
-  
+  const [title, setTitle] = useState([]);
   const [counter, setCounter] = useState(0);
 
 //unshift to add to front of arr
@@ -23,7 +24,7 @@ function App() {
   // }
 
   const getTitleName = async()=>{
-    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=dog&key=AIzaSyDtnkhRWfuvM8GAG9ftSorGyYAieYyRjCo&maxResults=10&order=viewCount&part=snippet`)
+    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=dog&key=${API_KEY}&maxResults=10&order=viewCount&part=snippet`)
     .then(res=> setCounter([res.data.items[0].snippet.thumbnails.default.url, res.data.items[0].snippet.thumbnails.default.height, res.data.items[0].snippet.thumbnails.default.width]));
   }
   
