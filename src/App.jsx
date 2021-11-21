@@ -11,6 +11,7 @@ function App() {
   
   const [comments, setComments] = useState([]);
   const [title, setTitle] = useState([]);
+  const [image, setImage] = useState([]);
   const [counter, setCounter] = useState(0);
 
 //unshift to add to front of arr
@@ -24,20 +25,37 @@ function App() {
   // }
 
   const getTitleName = async()=>{
-    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=dog&key=${API_KEY}&maxResults=10&order=viewCount&part=snippet`)
-    .then(res=> setCounter([res.data.items[0].snippet.thumbnails.default.url, res.data.items[0].snippet.thumbnails.default.height, res.data.items[0].snippet.thumbnails.default.width]));
+    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=dog&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
+    .then(res=> {
+      if(counter >= res.data.items.length - 1){
+        setCounter(0);
+      }
+      setTitle([res.data.items[counter].snippet.title]);
+    });
+  }
+
+
+  const getVideoImage = async()=>{
+    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=dog&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
+    .then(res=> setImage([res.data.items[counter].snippet.thumbnails.default.url, res.data.items[counter].snippet.thumbnails.default.height, res.data.items[counter].snippet.thumbnails.default.width]));
+  }
+
+  const imageGen = () => {
+    getTitleName();
+    getVideoImage();
+    setCounter(counter+1);
   }
   
-  useEffect(()=> console.log(counter),[]);
+  useEffect(()=> console.log(counter));
 
   // useEffect(()=> getAllComments(),[counter]);
 
   return (
     <div>
       <NavBar/>
-      <p></p>
-      <img src={counter[0]} height={counter[1]} width={counter[2]}/>
-      <button onClick={()=> getTitleName()}>hi</button>
+      <p>{title}</p>
+      <img src={image[0]} height={image[1]} width={image[2]}/>
+      <button onClick={()=> imageGen()}>hi</button>
     </div>
   );
 }
