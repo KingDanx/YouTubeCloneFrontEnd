@@ -54,47 +54,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchAppBar({imageGen, image, title, counter, videoId}) {
+function SearchAppBar({userInput, setUserInput, counter, getSearchResults, results, setResults, handelSubmit}) {
 
-  const [results, setResults] = useState([]);
-  const [userInput, setUserInput] = useState("");
+  
+  
   const [click, setClick] = useState(true);
 
-    const getSearchResults = async () => {
-        await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
-        .then((res) => {
-            setResults([res.data.items]);
-            console.log(res.data);
-            console.log(res.data.items[counter].id.videoId);
-        });
-    }
-    const getVideo = async () => {
-        await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
-        .then((res) => {
-            setResults([res.data.items[counter].id.videoId]);
-            console.log(res.data.items[counter].id.videoId);
-        });
-    }
-
-    useEffect(()=> {
-      console.log(results);
-      },[results]);
 
     const handleChange = (event) => {
       event.persist();  
       setUserInput(event.target.value);
       console.log(userInput);
-      };
+    };
 
-    const handelSubmit = (event) => {
-      event.preventDefault();
-      getSearchResults();
-    }
-    const handelVideoSubmit = (event) => {
-      event.preventDefault();
-      getVideo();
-      return results[counter].id.videoId;
-    }
+   
+
+    // const handelVideoSubmit = (event) => {
+    //   event.preventDefault();
+    //   getVideo();
+    //   return results[counter].id.videoId;
+    // }
  
 
 
@@ -138,13 +117,7 @@ function SearchAppBar({imageGen, image, title, counter, videoId}) {
      <form onSubmit={(event)=>handelSubmit(event)}>
        <input type="search" placeholder="Search.." name="search" value={userInput} onChange={(event)=>handleChange(event)}/>
        <button type="submit" >submit</button>
-     </form>
-     <p>{title}</p>
-      <img src={image[0]} height={image[1]} width={image[2]}/>
-      <button onClick={()=> imageGen(userInput)}>hi</button>
-      <iframe id="ytplayer" type="text/html" width="640" height="360"
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-      frameborder="0"/>
+     </form>    
     </div>
     
     // </Box>
