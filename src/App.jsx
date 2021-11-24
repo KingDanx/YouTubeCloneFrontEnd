@@ -16,10 +16,11 @@ function App() {
   const [title, setTitle] = useState([]);
   const [image, setImage] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [videoId, setVideoId] = useState("");
+  const [videoId, setVideoId] = useState("dQw4w9WgXcQ");
   const [userInput, setUserInput] = useState("");
   const [results, setResults] = useState([]);
   const [description, setDescription] = useState([]);
+  const [autoPlay, setAutoPlay] = useState(0);
 
 //unshift to add to front of arr
 
@@ -72,8 +73,8 @@ function App() {
   return (
     <div>
       <SearchAppBar userInput={userInput} setUserInput={setUserInput} handelSubmit={handelSubmit}/>
-      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId}/>
-      <VideoPlayer videoId={videoId} results={results} /> 
+      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay}/>
+      <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} /> 
       <Comments comments={comments} counter={counter} videoId={videoId}/>
       <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
     </div>
