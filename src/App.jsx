@@ -3,8 +3,10 @@ import axios from 'axios';
 import SearchAppBar from "./components/SearchAppBar/SearchAppBar";
 import VideoPlayer from './components/VideoPlayer/VideoPlayer';
 import SearchResults from './components/SearchResults/SearchResults';
+import Comments from './components/Comments/Comments';
 import './App.css';
 import API_KEY from './YOUTUBE_API_KEY/API_KEY';
+import CommentForm from './components/CommentForm/CommentForm';
 
 
 
@@ -17,16 +19,17 @@ function App() {
   const [videoId, setVideoId] = useState("xW7p3PUMuyk");
   const [userInput, setUserInput] = useState("");
   const [results, setResults] = useState([]);
+  const [description, setDescription] = useState([]);
 
 //unshift to add to front of arr
 
-  // const getAllComments = async()=>{
-  //   await axios.get("http://localhost:5000/api/comments/")
-  //   .then((res) => {
-  //     setComments(res.data);
-  //     console.log(res.data);
-  //   });
-  // }
+  const getAllComments = async()=>{
+    await axios.get(`http://localhost:5000/api/comments/`)
+    .then((res) => {
+      setComments(res.data);
+      console.log(res.data);
+    });
+  }
 
 
   const getTitleName = async()=>{
@@ -61,37 +64,43 @@ function App() {
   const getVideos = async () => {
     await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
     .then((res) => {
+      if(counter >= res.data.items.length - 1){
+        setCounter(0);
+      }
         setResults(res.data.items);
         setVideoId(res.data.items[counter].id.videoId)
+        setTitle(res.data.items[counter].snippet.title)
+        setDescription(res.data.items[counter].snippet.description)
+        setImage([res.data.items[counter].snippet.thumbnails.default.url, res.data.items[counter].snippet.thumbnails.default.height, res.data.items[counter].snippet.thumbnails.default.width]);
+        setCounter(counter+1);
         console.log(res.data.items);
     });
 }
 
-  const imageGen = () => {
-    getTitleName();
-    getVideoImage();
-    getVideoId()
+  const videoGen = () => {
+    getVideos();
     setCounter(counter+1);
   }
 
   const handelSubmit = (event) => {
     event.preventDefault();
     // debugger
-    getSearchResults();
+    getVideos();
   }
   
   useEffect(() => {
-    getVideos();  
-   
-  }, [results]);
+    getAllComments(); 
+  }, []);
 
   return (
     <div>
       <SearchAppBar userInput={userInput} setUserInput={setUserInput} counter={counter} getSearchResults={getSearchResults} results={results} setResults={setResults} handelSubmit={handelSubmit}/>
       <p>{title}</p>
       <img src={image[0]} height={image[1]} width={image[2]}/>
-      <button onClick={()=> imageGen()}>hi</button>
+      <button onClick={()=> videoGen()}>hi</button>
      <VideoPlayer videoId={videoId} results={results}/>
+     <Comments comments={comments} counter={counter} videoId={videoId}/>
+     <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
     </div>
   );
 }
