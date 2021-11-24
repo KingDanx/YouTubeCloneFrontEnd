@@ -9,7 +9,7 @@ function Comments({comments, videoId}){
 
     return(
        <div>
-           {comments.map((comment, index) => videoId === comment.videoID ? <p key={index}>{comment.text}</p> : null)}
+           {comments.slice(0).reverse().map((comment, index) => videoId === comment.videoID ? <p key={index}>{comment.text}</p> : null)}
        </div>
         
     );
