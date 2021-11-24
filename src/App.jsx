@@ -56,7 +56,7 @@ function App() {
     .then(res=> setImage([res.data.items[counter].snippet.thumbnails.default.url, res.data.items[counter].snippet.thumbnails.default.height, res.data.items[counter].snippet.thumbnails.default.width]));
   }
   
-  const getVideoId = async()=>{
+  const getVideoId = async(videoId)=>{
     return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
     .then(res=> setVideoId([res.data.items[counter].id.videoId]));
   }
@@ -70,17 +70,12 @@ function App() {
         setResults(res.data.items);
         setVideoId(res.data.items[counter].id.videoId)
         setTitle(res.data.items[counter].snippet.title)
-        setDescription(res.data.items[counter].snippet.description)
+        setDescription(res.items[counter].snippet.description)
         setImage([res.data.items[counter].snippet.thumbnails.medium.url, res.data.items[counter].snippet.thumbnails.medium.height, res.data.items[counter].snippet.thumbnails.medium.width]);
         setCounter(counter+1);
         console.log(res.data.items);
     });
 }
-
-  const videoGen = () => {
-    getVideos();
-    setCounter(counter+1);
-  }
 
   const handelSubmit = (event) => {
     event.preventDefault();
@@ -95,13 +90,10 @@ function App() {
   return (
     <div>
       <SearchAppBar userInput={userInput} setUserInput={setUserInput} counter={counter} getSearchResults={getSearchResults} results={results} setResults={setResults} handelSubmit={handelSubmit}/>
-      <p>{title}</p>
-      <img src={image[0]} height={image[1]} width={image[2]}/>
-      <button onClick={()=> videoGen()}>hi</button>
-     <SearchResults results={results}/>
-     <VideoPlayer videoId={videoId} results={results}/>
-     <Comments comments={comments} counter={counter} videoId={videoId}/>
-     <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
+      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId}/>
+      <VideoPlayer videoId={videoId} results={results} /> 
+      <Comments comments={comments} counter={counter} videoId={videoId}/>
+      <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
     </div>
   );
 }
