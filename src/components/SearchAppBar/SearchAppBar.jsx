@@ -54,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchAppBar({userInput, setUserInput, counter, getSearchResults, results, setResults, handelSubmit}) {
+function SearchAppBar({userInput, setUserInput, handelSubmit}) {
 
   
   

@@ -16,7 +16,7 @@ function App() {
   const [title, setTitle] = useState([]);
   const [image, setImage] = useState([]);
   const [counter, setCounter] = useState(0);
-  const [videoId, setVideoId] = useState("dQw4w9WgXcQ");
+  const [videoId, setVideoId] = useState("");
   const [userInput, setUserInput] = useState("");
   const [results, setResults] = useState([]);
   const [description, setDescription] = useState([]);
@@ -49,38 +49,20 @@ function App() {
         console.log(res.data);
         console.log(res.data.items[counter].id.videoId);
     });
-}
-
-  const getVideoImage = async()=>{
-    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
-    .then(res=> setImage([res.data.items[counter].snippet.thumbnails.default.url, res.data.items[counter].snippet.thumbnails.default.height, res.data.items[counter].snippet.thumbnails.default.width]));
-  }
-  
-  const getVideoId = async(videoId)=>{
-    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
-    .then(res=> setVideoId([res.data.items[counter].id.videoId]));
-  }
+}  
 
   const getVideos = async () => {
     await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
     .then((res) => {
-      if(counter >= res.data.items.length - 1){
-        setCounter(0);
-      }
         setResults(res.data.items);
-        setVideoId(res.data.items[counter].id.videoId)
-        setTitle(res.data.items[counter].snippet.title)
-        setDescription(res.items[counter].snippet.description)
-        setImage([res.data.items[counter].snippet.thumbnails.medium.url, res.data.items[counter].snippet.thumbnails.medium.height, res.data.items[counter].snippet.thumbnails.medium.width]);
-        setCounter(counter+1);
         console.log(res.data.items);
     });
 }
 
   const handelSubmit = (event) => {
     event.preventDefault();
-    // debugger
     getVideos();
+    setUserInput("");
   }
   
   useEffect(() => {
@@ -89,7 +71,7 @@ function App() {
 
   return (
     <div>
-      <SearchAppBar userInput={userInput} setUserInput={setUserInput} counter={counter} getSearchResults={getSearchResults} results={results} setResults={setResults} handelSubmit={handelSubmit}/>
+      <SearchAppBar userInput={userInput} setUserInput={setUserInput} handelSubmit={handelSubmit}/>
       <SearchResults results={results} videoId={videoId} setVideoId={setVideoId}/>
       <VideoPlayer videoId={videoId} results={results} /> 
       <Comments comments={comments} counter={counter} videoId={videoId}/>
