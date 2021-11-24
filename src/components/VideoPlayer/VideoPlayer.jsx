@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 
 function VideoPlayer({ videoId, autoPlay}) {
 
-  useEffect(() => {
-    console.log(videoId)
-  }, [videoId]);
-
   return (
     <div>
       <iframe
