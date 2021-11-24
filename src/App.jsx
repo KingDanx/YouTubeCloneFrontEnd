@@ -71,7 +71,7 @@ function App() {
         setVideoId(res.data.items[counter].id.videoId)
         setTitle(res.data.items[counter].snippet.title)
         setDescription(res.data.items[counter].snippet.description)
-        setImage([res.data.items[counter].snippet.thumbnails.default.url, res.data.items[counter].snippet.thumbnails.default.height, res.data.items[counter].snippet.thumbnails.default.width]);
+        setImage([res.data.items[counter].snippet.thumbnails.medium.url, res.data.items[counter].snippet.thumbnails.medium.height, res.data.items[counter].snippet.thumbnails.medium.width]);
         setCounter(counter+1);
         console.log(res.data.items);
     });
@@ -98,6 +98,7 @@ function App() {
       <p>{title}</p>
       <img src={image[0]} height={image[1]} width={image[2]}/>
       <button onClick={()=> videoGen()}>hi</button>
+     <SearchResults image={image} title={title} results={results}/>
      <VideoPlayer videoId={videoId} results={results}/>
      <Comments comments={comments} counter={counter} videoId={videoId}/>
      <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
