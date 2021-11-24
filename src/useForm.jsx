@@ -12,8 +12,8 @@ const useForm = (callback) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         callback();
+        setFormValue("");
     };
 
     return {formValue, handleChange, handleSubmit}
