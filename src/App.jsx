@@ -98,7 +98,7 @@ function App() {
       <p>{title}</p>
       <img src={image[0]} height={image[1]} width={image[2]}/>
       <button onClick={()=> videoGen()}>hi</button>
-     <SearchResults image={image} title={title} results={results}/>
+     <SearchResults results={results}/>
      <VideoPlayer videoId={videoId} results={results}/>
      <Comments comments={comments} counter={counter} videoId={videoId}/>
      <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>

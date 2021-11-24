@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function SearchResults({image, title, results}) {
+function SearchResults({results}) {
     // const [results, setResults] = useState([]);
 
     // const getSearchResults = async () => {
@@ -15,7 +15,10 @@ function SearchResults({image, title, results}) {
 
     return(
         <div>
-            {results.map((vid, i) => <p key={i}>{vid.snippet.title}</p>)}
+            {results.map((vid, i) => <div>
+                <p key={i}>{vid.snippet.title}</p>
+                <img src={vid.snippet.thumbnails.medium.url}/> 
+                </div>)}
         </div>
     )
 } 
