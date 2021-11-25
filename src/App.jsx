@@ -19,6 +19,9 @@ function App() {
   const [results, setResults] = useState([]);
   const [autoPlay, setAutoPlay] = useState(0);
   const [related, setRelated] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  
+  const handleClose = () => setOpen(false);
 
 //unshift to add to front of arr
 
@@ -71,20 +74,13 @@ const getRelatedVideos = async () => {
     });
 }
 
-  const handelSubmit = (event) => {
-    event.preventDefault();
-    getVideos();
-    setUserInput("");
-  }
-
   useEffect(() => {
     getAllComments(); 
   }, []);
 
   return (
     <div>
-      <SearchAppBar userInput={userInput} setUserInput={setUserInput} handelSubmit={handelSubmit}/>
-      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos}/>
+      <SearchAppBar userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
       <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} /> 
       <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} />
       <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
