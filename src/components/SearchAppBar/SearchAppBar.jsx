@@ -75,8 +75,9 @@ function SearchAppBar({
   setAutoPlay,
   getRelatedVideos,
   videoId,
+  setTitle,
+  title
 }) {
-  const [click, setClick] = useState(true);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -154,7 +155,7 @@ function SearchAppBar({
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className="search-div-map">
-              {results.map((vid, i) => (
+              {results.map((vid, i) => vid.id.videoId === videoId ? setTitle(vid.snippet.title) : (
                 <div
                   key={i}
                   style={{ cursor: "pointer" }}

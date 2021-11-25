@@ -20,6 +20,7 @@ function App() {
   const [autoPlay, setAutoPlay] = useState(0);
   const [related, setRelated] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = useState("Rick Astley - Never Gonna Give You Up (Official Music Video)");
   
   const handleClose = () => setOpen(false);
 
@@ -80,16 +81,17 @@ const getRelatedVideos = async () => {
 
   return (
     <div>
-      <SearchAppBar userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
+      <SearchAppBar title={title} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
       <div className="App-grid">
         <div className="App-video-player">
           <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay}/>
         </div>
         <div className="App-related-video">
-          <RelatedVideos related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 
+          <RelatedVideos title={title} setTitle={setTitle} related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 
         </div>
         
         <div className="comments-margin-top">
+          <h2>{title}</h2>
           <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
           <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike}/>
         </div>
