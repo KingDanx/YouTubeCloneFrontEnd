@@ -6,7 +6,7 @@ function VideoPlayer({ videoId, autoPlay}) {
   return (
     <div className="container">
       <iframe
-        src={`https://www.youtube.com/embed/${videoId}?autoplay=${autoPlay}&mute=1`}
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=${autoPlay}&mute=0`}
         className="responsive-iframe"
         />
     </div>

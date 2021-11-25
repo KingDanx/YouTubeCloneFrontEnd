@@ -3,7 +3,7 @@ import axios from 'axios';
 import useForm from '../../useForm';
 import "../Comments/Comments.css";
 
-const CommentForm = ({videoId, setComments, getAllComments}) => {
+const CommentForm = ({videoId, getAllComments}) => {
     
     const {formValue, handleChange, handleSubmit} = useForm(postComment);
 
