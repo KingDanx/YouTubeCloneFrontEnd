@@ -39,13 +39,20 @@
 }
 
 .App-video-player {
-  display: inline-block;
+  margin-top: 20px;
 }
 
 .App-related-video{
     float: right;
     margin-left: 8px;
     height: 0px;
+    width: 500;
+}
+.App-related-video-title{
+    width: 320px;
+}
+.App-related-video-divs{
+    margin-right: 8px;
 }
 
 @keyframes App-logo-spin {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../App.css";
 
 const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId, setTitle, title}) => {
   
@@ -21,8 +22,9 @@ const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, vid
             key={i}
             style={{ cursor: "pointer" }}
             onClick={(event) => handelSubmit(event, vid)}
+            className="App-related-video-divs"
           >
-            <p>{vid.snippet.title}</p>
+            <p className="App-related-video-title">{vid.snippet.title}</p>
             <img src={vid.snippet.thumbnails.medium.url} />
           </div>
         )
