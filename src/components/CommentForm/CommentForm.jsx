@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useForm from '../../useForm';
+import "../Comments/Comments.css";
 
 const CommentForm = ({videoId, setComments, getAllComments}) => {
     

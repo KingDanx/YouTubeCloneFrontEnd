@@ -28,6 +28,26 @@
   color: #61dafb;
 }
 
+/* custom */
+.App-grid{
+  display: inline-grid;
+  -ms-grid-column: 3fr 1fr;
+  grid-template-columns: 1fr auto;
+  grid-auto-rows: min-content;
+  height: 100%;
+  width: 100%;
+}
+
+.App-video-player {
+  display: inline-block;
+}
+
+.App-related-video{
+    float: right;
+    margin-left: 8px;
+    height: 0px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

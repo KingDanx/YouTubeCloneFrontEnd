@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
 function Comments({comments, videoId, addLike, addDislike}){
+        
     useEffect(() => {
         console.log(comments)
     }, [comments]);

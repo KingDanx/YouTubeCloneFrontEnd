@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId }) => {
-  const handelSubmit = (event, vid) => {
+  
+    const handelSubmit = (event, vid) => {
     event.preventDefault();
     setVideoId(vid.id.videoId);
     setAutoPlay(1);

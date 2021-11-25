@@ -1,0 +1,37 @@
+.search-desc-text{
+    font-size: 65%;
+    margin-top: 0%;
+    width: 60%;
+    overflow: hidden;
+}
+
+.search-title-text{
+    margin-bottom: 0%;
+    margin-top: 0%;
+    overflow: hidden;
+    width: 60%;
+}
+
+.search-left-img{
+    width: 60%;
+}
+
+.search-div-map{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.search-div-map-margin{
+    text-align: center;
+    margin-top: 8px;
+}
+
+.search-right-text {
+    text-align: initial;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

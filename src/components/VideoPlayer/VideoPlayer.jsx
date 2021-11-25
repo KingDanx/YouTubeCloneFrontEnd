@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
+import "./VideoPlayer.css";
 
 function VideoPlayer({ videoId, autoPlay}) {
 
   return (
-    <div>
+    <div className="container">
       <iframe
-        id="ytplayer"
-        type="text/html"
-        width="640"
-        height="360"
         src={`https://www.youtube.com/embed/${videoId}?autoplay=${autoPlay}&mute=1`}
-        frameborder="0"/>
+        className="responsive-iframe"
+        />
     </div>
   );
 }

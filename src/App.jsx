@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchAppBar from "./components/SearchAppBar/SearchAppBar";
 import VideoPlayer from './components/VideoPlayer/VideoPlayer';
-import SearchResults from './components/SearchResults/SearchResults';
 import Comments from './components/Comments/Comments';
 import RelatedVideos from './components/RelatedVideos/RelatedVideos';
 import './App.css';
+import "./components/Comments/Comments.css";
 import API_KEY from './YOUTUBE_API_KEY/API_KEY';
 import CommentForm from './components/CommentForm/CommentForm';
 
@@ -14,7 +14,7 @@ import CommentForm from './components/CommentForm/CommentForm';
 function App() {
   
   const [comments, setComments] = useState([]);
-  const [videoId, setVideoId] = useState("OcL3wJCE1w8");
+  const [videoId, setVideoId] = useState("dQw4w9WgXcQ");
   const [userInput, setUserInput] = useState("");
   const [results, setResults] = useState([]);
   const [autoPlay, setAutoPlay] = useState(0);
@@ -59,7 +59,7 @@ function App() {
   }
 
   const getVideos = async () => {
-    await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
+    await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=6&order=viewCount&part=snippet`)
     .then((res) => {
         setResults(res.data.items);
         console.log(res.data.items);
@@ -81,10 +81,22 @@ const getRelatedVideos = async () => {
   return (
     <div>
       <SearchAppBar userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
-      <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} /> 
-      <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} />
-      <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
-      <RelatedVideos related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/>
+      <div className="App-grid">
+        <div className="App-video-player">
+          <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay}/>
+        </div>
+        <div className="App-related-video">
+          <RelatedVideos related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 
+        </div>
+        
+        <div className="comments-margin-top">
+          <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
+          <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike}/>
+        </div>
+      </div>
+      
+      
+      
     </div>
   );
 }

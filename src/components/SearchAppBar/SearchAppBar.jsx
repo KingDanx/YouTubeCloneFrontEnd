@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import './SearchAppBar.css';
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
@@ -58,7 +59,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "70%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -141,7 +142,6 @@ function SearchAppBar({
           </Search>
         </Toolbar>
       </AppBar>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -150,18 +150,23 @@ function SearchAppBar({
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Results:
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <div>
+            <div className="search-div-map">
               {results.map((vid, i) => (
                 <div
                   key={i}
                   style={{ cursor: "pointer" }}
                   onClick={(event) => handleClick(event, vid)}
                 >
-                  <p>{vid.snippet.title}</p>
-                  <img src={vid.snippet.thumbnails.medium.url} />
+                  <div className="search-div-map-margin">
+                    <img className="search-left-img" src={vid.snippet.thumbnails.medium.url} />
+                    <div className="search-right-text">
+                      <p className="search-title-text">{vid.snippet.title}</p>
+                      <p className="search-desc-text">{vid.snippet.description}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
