@@ -4,6 +4,7 @@ import SearchAppBar from "./components/SearchAppBar/SearchAppBar";
 import VideoPlayer from './components/VideoPlayer/VideoPlayer';
 import SearchResults from './components/SearchResults/SearchResults';
 import Comments from './components/Comments/Comments';
+import RelatedVideos from './components/RelatedVideos/RelatedVideos';
 import './App.css';
 import API_KEY from './YOUTUBE_API_KEY/API_KEY';
 import CommentForm from './components/CommentForm/CommentForm';
@@ -13,14 +14,11 @@ import CommentForm from './components/CommentForm/CommentForm';
 function App() {
   
   const [comments, setComments] = useState([]);
-  const [title, setTitle] = useState([]);
-  const [image, setImage] = useState([]);
-  const [counter, setCounter] = useState(0);
-  const [videoId, setVideoId] = useState("dQw4w9WgXcQ");
+  const [videoId, setVideoId] = useState("OcL3wJCE1w8");
   const [userInput, setUserInput] = useState("");
   const [results, setResults] = useState([]);
-  const [description, setDescription] = useState([]);
   const [autoPlay, setAutoPlay] = useState(0);
+  const [related, setRelated] = useState([]);
 
 //unshift to add to front of arr
 
@@ -30,32 +28,45 @@ function App() {
       setComments(res.data);
       console.log(res.data);
     });
+  } 
+  
+  const addLike = async(comments) => {
+    await axios.put(`http://localhost:5000/api/comments/${comments._id}`, {
+            videoID: comments.videoID,
+            text: comments.text,
+            likes: comments.likes + 1,
+            dislikes: comments.dislikes
+        })
+        .then((res) => {
+          getAllComments();
+          console.log(res.data.likes);
+        });
   }
-
-
-  const getTitleName = async()=>{
-    return await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=2&order=viewCount&part=snippet`)
-    .then(res=> {
-      if(counter >= res.data.items.length - 1){
-        setCounter(0);
-      }
-      setTitle([res.data.items[counter].snippet.title]);
-    });
+  const addDislike = async(comments) => {
+    await axios.put(`http://localhost:5000/api/comments/${comments._id}`, {
+            videoID: comments.videoID,
+            text: comments.text,
+            likes: comments.likes,
+            dislikes: comments.dislikes + 1
+        })
+        .then((res) => {
+          getAllComments();
+          console.log(res.data.dislikes);
+        });
   }
-
-  const getSearchResults = async () => {
-    await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
-    .then((res) => {
-        setResults(res.data.items);
-        console.log(res.data);
-        console.log(res.data.items[counter].id.videoId);
-    });
-}  
 
   const getVideos = async () => {
     await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=5&order=viewCount&part=snippet`)
     .then((res) => {
         setResults(res.data.items);
+        console.log(res.data.items);
+    });
+}
+  
+const getRelatedVideos = async () => {
+    await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${videoId}&type=video&key=${API_KEY}&part=snippet`)
+    .then((res) => {
+        setRelated(res.data.items);
         console.log(res.data.items);
     });
 }
@@ -65,7 +76,7 @@ function App() {
     getVideos();
     setUserInput("");
   }
-  
+
   useEffect(() => {
     getAllComments(); 
   }, []);
@@ -73,10 +84,11 @@ function App() {
   return (
     <div>
       <SearchAppBar userInput={userInput} setUserInput={setUserInput} handelSubmit={handelSubmit}/>
-      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay}/>
+      <SearchResults results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos}/>
       <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} /> 
-      <Comments comments={comments} counter={counter} videoId={videoId}/>
+      <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} />
       <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
+      <RelatedVideos related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/>
     </div>
   );
 }
