@@ -158,7 +158,8 @@ function SearchAppBar({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style}
+        className="css-11t3245">
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Results:
           </Typography>
