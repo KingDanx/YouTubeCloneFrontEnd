@@ -22,7 +22,7 @@ const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, vid
             key={i}
             style={{ cursor: "pointer" }}
             onClick={(event) => handelSubmit(event, vid)}
-            className="App-related-video-divs"
+            className="App-related-video-center"
           >
             <p className="App-related-video-title">{vid.snippet.title}</p>
             <img src={vid.snippet.thumbnails.medium.url} />
