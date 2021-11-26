@@ -12,9 +12,11 @@ function Comments({ comments, videoId, addLike, addDislike }) {
       {comments
         .slice(0)
         .reverse()
+        .filter((commentss, index) =>
+        videoId === commentss.videoID)
         .map((comment, index) =>
           videoId === comment.videoID ? (
-            <div className="commnets-map-div" key={index}>
+            <div key={index} className={index % 2 === 0 ? "commnets-map-div-alt" : "commnets-map-div"}>
               <span>{comment.text} </span>
               <div className="comments-button-right">
                 <span className="comments-dislikes-span">
