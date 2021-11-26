@@ -2,3 +2,24 @@
     margin-top: 0%;
     margin-left: 12px;
 }
+
+.comments-button-right{
+    float: right;
+}
+
+.commnets-map-div{
+    margin-top: 16px;
+}
+
+.comments-likes-span{
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.comments-dislikes-span{
+    margin-right: 5px;
+}
+
+.comments-likes-button{
+    margin-right: 5px;
+}
