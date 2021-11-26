@@ -4,6 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,6 +12,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import './SearchAppBar.css';
+
+const Box1 = styled("form")(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.common.black, 0.15),
+}));
 
 const Search = styled("form")(({ theme }) => ({
   position: "relative",
@@ -60,7 +65,10 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "70%",
-  bgcolor: "background.paper",
+  height: "80%",
+  bgcolor: "#333",
+  color: "white",
+  borderRadius: 10,
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -108,25 +116,26 @@ function SearchAppBar({
   }, [videoId]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, bgcolor: "#2c2c2c" }}
+      className="css-hip9hq-MuiPaper-root-MuiAppBar-root">
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
+          <YouTubeIcon
+            fontSize="large"
             edge="start"
-            color="inherit"
+            htmlColor="red"
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </YouTubeIcon>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            YouTube
           </Typography>
           <Search onSubmit={(event) => handelSubmit(event)}>
             <SearchIconWrapper>

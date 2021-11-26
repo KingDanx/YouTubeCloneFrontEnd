@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
 
-const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId, setTitle, title}) => {
+const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId, setTitle}) => {
   
     const handelSubmit = (event, vid) => {
     event.preventDefault();

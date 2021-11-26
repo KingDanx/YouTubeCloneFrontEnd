@@ -80,7 +80,7 @@ const getRelatedVideos = async () => {
   }, []);
 
   return (
-    <div>
+    <div className="App">
       <SearchAppBar title={title} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
       <div className="App-grid">
         <div className="App-video-player">

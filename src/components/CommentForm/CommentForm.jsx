@@ -21,7 +21,7 @@ const CommentForm = ({videoId, getAllComments}) => {
     return ( 
         <form onSubmit={(event)=>handleSubmit(event)}>
             <input name="text" value={formValue} onChange={handleChange} type="text" />
-            <input type="submit" />
+            <button type="submit">Comment</button>
         </form>
      );
 }
