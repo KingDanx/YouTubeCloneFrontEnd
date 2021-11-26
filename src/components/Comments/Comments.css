@@ -3,8 +3,15 @@
     margin-left: 12px;
 }
 
-.comments-button-right{
+.comments-button-right {
     float: right;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
 .commnets-map-div{
