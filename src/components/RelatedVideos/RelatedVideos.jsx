@@ -20,7 +20,6 @@ const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, vid
         !vid.snippet ? null : vid.id.videoId === videoId ? setTitle(vid.snippet.title) : (
           <div
             key={i}
-            style={{ cursor: "pointer" }}
             onClick={(event) => handelSubmit(event, vid)}
             className="App-related-video-center"
           >

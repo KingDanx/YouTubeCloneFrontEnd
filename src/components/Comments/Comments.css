@@ -39,3 +39,21 @@
 .comments-likes-button{
     margin-right: 5px;
 }
+
+.comment-form {
+    padding: 8px;
+    background-color: #181818;
+    width: 98%;
+    border-bottom-color: black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+
+.comment-form-button {
+    display: flex;
+    justify-items: end;
+    justify-content: end;
+    margin-top: 5px;
+}
