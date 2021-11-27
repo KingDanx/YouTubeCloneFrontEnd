@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useForm from '../../useForm';
+import Button from '@mui/material/Button';
 import "../Comments/Comments.css";
 
 const CommentForm = ({videoId, getAllComments}) => {
@@ -21,7 +22,7 @@ const CommentForm = ({videoId, getAllComments}) => {
     return ( 
         <form onSubmit={(event)=>handleSubmit(event)}>
             <input name="text" value={formValue} onChange={handleChange} type="text" />
-            <button type="submit">Comment</button>
+            <Button type="submit" variant="outlined"><b>Comment</b></Button>
         </form>
      );
 }

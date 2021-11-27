@@ -16,11 +16,15 @@
 
 .commnets-map-div{
     margin-top: 16px;
+    padding-left: 14px; 
 }
 
 .commnets-map-div-alt{
     margin-top: 16px;
     background-color: #3a3a3a!important;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
 }
 
 .comments-likes-span{
