@@ -4,6 +4,11 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import Button from "@mui/material/Button";
 import useForm from "../../useForm";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function Comments({
   comments,
@@ -14,17 +19,24 @@ function Comments({
   addReplyDislike,
   addReplyLike,
 }) {
-    
   useEffect(() => {
     console.log(comments);
   }, [comments]);
 
-  const { formValue, replyValue, handleChange, handleSubmit, handleReplyChange } = useForm(postReply);
-  
+  const {
+    formValue,
+    replyValue,
+    handleChange,
+    handleSubmit,
+    handleReplyChange,
+  } = useForm(postReply);
 
   async function postReply(comment) {
     await axios
-      .post(`http://localhost:5000/api/comments/${comment._id}/replies`, replyValue)
+      .post(
+        `http://localhost:5000/api/comments/${comment._id}/replies`,
+        replyValue
+      )
       .then((res) => {
         console.log(res.data);
         getAllComments();
@@ -48,68 +60,87 @@ function Comments({
               <div className="comment-like-dislike-div ">
                 <div>{comment.text}</div>
                 <div>
-                  <div onClick={() => addDislike(comment)} className="comments-button-right">
+                  <div
+                    onClick={() => addDislike(comment)}
+                    className="comments-button-right"
+                  >
                     <span className="comments-dislikes-span">
                       {comment.dislikes}
                     </span>
-                    <ThumbDownOffAltIcon
-                      className="comments-likes-button"
-                    />
+                    <ThumbDownOffAltIcon className="comments-likes-button" />
                   </div>
-                  <div onClick={() => addLike(comment)} className="comments-button-right">
+                  <div
+                    onClick={() => addLike(comment)}
+                    className="comments-button-right"
+                  >
                     <span className="comments-likes-span">{comment.likes}</span>
-                    <ThumbUpOffAltIcon
-                      className="comments-likes-button"
-                    />
+                    <ThumbUpOffAltIcon className="comments-likes-button" />
                   </div>
                 </div>{" "}
               </div>
-              <div>
-                <form onSubmit={(event) => handleSubmit(event, comment)}>
-                  <input
-                    className="comment-form"
-                    name="text"
-                    id={comment._id}
-                    placeholder="Add a public reply..."
-                    value={replyValue.text}
-                    onChange={(event)=>handleReplyChange(event)}
-                    type="text"
-                  />
-                  <div className="comment-form-button">
-                    <Button type="submit" variant="outlined">
-                      <b>Reply</b>
-                    </Button>
-                  </div>
-                </form>
-              </div>
-              <div>
-                {comment.replies.map((reply, index) => (
-                  <div key={index} className="reply-text">
-                    <div className="comment-like-dislike-div ">
-                      <div>{reply.text}</div>
-                      <div>
-                        <div className="comments-button-right">
-                          <span className="comments-dislikes-span">
-                            {reply.dislikes}
-                          </span>
-                          <ThumbDownOffAltIcon
-                            className="comments-likes-button"
-                            onClick={() => addReplyDislike(comment, reply)}
-                          />
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Add a public reply...</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    <div>
+                      <form onSubmit={(event) => handleSubmit(event, comment)}>
+                        <input
+                          className="comment-form"
+                          name="text"
+                          id={comment._id}
+                          placeholder="Add a public reply..."
+                          value={replyValue.text}
+                          onChange={(event) => handleReplyChange(event)}
+                          type="text"
+                        />
+                        <div className="comment-form-button">
+                          <Button type="submit" variant="outlined">
+                            <b>Reply</b>
+                          </Button>
                         </div>
-                        <div className="comments-button-right">
-                          <span className="comments-likes-span">
-                            {reply.likes}
-                          </span>
-                          <ThumbUpOffAltIcon
-                            className="comments-likes-button"
-                            onClick={() => addReplyLike(comment, reply)}
-                          />
-                        </div>
-                      </div>{" "}
+                      </form>
                     </div>
-                  </div>
-                ))}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+
+              <div>
+                {comment.replies
+                  .slice(0)
+                  .reverse()
+                  .map((reply, index) => (
+                    <div key={index} className="reply-text">
+                      <div className="comment-like-dislike-div ">
+                        <div>{reply.text}</div>
+                        <div>
+                          <div className="comments-button-right">
+                            <span className="comments-dislikes-span">
+                              {reply.dislikes}
+                            </span>
+                            <ThumbDownOffAltIcon
+                              className="comments-likes-button"
+                              onClick={() => addReplyDislike(comment, reply)}
+                            />
+                          </div>
+                          <div className="comments-button-right">
+                            <span className="comments-likes-span">
+                              {reply.likes}
+                            </span>
+                            <ThumbUpOffAltIcon
+                              className="comments-likes-button"
+                              onClick={() => addReplyLike(comment, reply)}
+                            />
+                          </div>
+                        </div>{" "}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           ) : null
