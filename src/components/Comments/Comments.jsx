@@ -1,30 +1,73 @@
 import React, { useState, useEffect } from "react";
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import axios from 'axios';
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import Button from '@mui/material/Button';
+import useForm from '../../useForm';
 
-function Comments({ comments, videoId, addLike, addDislike }) {
+function Comments({ comments, videoId, addLike, addDislike, getAllComments }) {
   useEffect(() => {
     console.log(comments);
   }, [comments]);
+
+  const {formValue, handleChange, handleSubmit} = useForm(postReply);
+
+  async function postReply(comment){
+    await axios.post(`http://localhost:5000/api/comments/${comment._id}/replies`, {
+        text: formValue
+    })
+    .then((res) => {
+      console.log(res.data);
+      getAllComments();
+    });
+  }
 
   return (
     <div>
       {comments
         .slice(0)
         .reverse()
-        .filter((commentss, index) =>
-        videoId === commentss.videoID)
+        .filter((commentss, index) => videoId === commentss.videoID)
         .map((comment, index) =>
           videoId === comment.videoID ? (
-            <div key={index} className={index % 2 === 0 ? "commnets-map-div-alt" : "commnets-map-div"}>
+            <div
+              key={index}
+              className={
+                index % 2 === 0 ? "commnets-map-div-alt" : "commnets-map-div"
+              }
+            >
               <span>{comment.text} </span>
+              <div>
+              <form onSubmit={(event)=>handleSubmit(event, comment)}>
+                      <input
+                        className="comment-form"
+                        name="text"
+                        placeholder="Add a public reply..."
+                        value={formValue}
+                        onChange={handleChange}
+                        type="text"
+                      />
+                      <div className="comment-form-button">
+                        <Button type="submit" variant="outlined">
+                          <b>Reply</b>
+                        </Button>
+                      </div>
+                    </form>
+              </div>
+              <div>
+                {comment.replies.map((reply, index) => (
+                  <div>
+                    <p key={index}>{reply.text}</p>
+                  </div>
+                ))}
+              </div>
               <div className="comments-button-right">
                 <span className="comments-dislikes-span">
                   {comment.dislikes}
                 </span>
-                <ThumbDownOffAltIcon 
-                className="comments-likes-button"
-                onClick={() => addDislike(comment)} 
+                <ThumbDownOffAltIcon
+                  className="comments-likes-button"
+                  onClick={() => addDislike(comment)}
                 />
               </div>
               <div className="comments-button-right">
@@ -33,7 +76,7 @@ function Comments({ comments, videoId, addLike, addDislike }) {
                   className="comments-likes-button"
                   onClick={() => addLike(comment)}
                 />
-                </div>
+              </div>
             </div>
           ) : null
         )}

@@ -10,9 +10,9 @@ const useForm = (callback) => {
         setFormValue(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event, commentId = null) => {
         event.preventDefault();
-        callback();
+        callback(commentId);
         setFormValue("");
     };
 

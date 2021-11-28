@@ -21,7 +21,6 @@ function App() {
   const [related, setRelated] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = useState("Rick Astley - Never Gonna Give You Up (Official Music Video)");
-  
   const handleClose = () => setOpen(false);
 
 //unshift to add to front of arr
@@ -93,7 +92,7 @@ const getRelatedVideos = async () => {
         <div className="comments-margin-top">
           <h2>{title}</h2>
           <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
-          <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike}/>
+          <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} getAllComments={getAllComments}/>
         </div>
       </div>
       
