@@ -51,6 +51,7 @@
     border-left: none;
     border-right: none;
     outline: none;
+    color: white;
 }
 
 .comment-form-button {
@@ -62,10 +63,13 @@
 
 .comment-like-dislike-div {
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 80% 20%;
     padding-bottom: 16px;
 }
 
 .reply-text{
     padding-left: 40px;
+    padding-top: 20px;
+    overflow-wrap: break-word;
+    
 }

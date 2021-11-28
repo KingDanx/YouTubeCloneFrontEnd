@@ -18,7 +18,7 @@ function Comments({
     console.log(comments);
   }, [comments]);
 
-  const { formValue, handleChange, handleSubmit } = useForm(postReply);
+  const { formValue, handleChange, handleSubmit, handleReplyChange } = useForm(postReply);
 
   async function postReply(comment) {
     await axios
@@ -68,7 +68,7 @@ function Comments({
                 <form onSubmit={(event) => handleSubmit(event, comment)}>
                   <input
                     className="comment-form"
-                    name="text"
+                    name={comment._id}
                     placeholder="Add a public reply..."
                     value={formValue}
                     onChange={handleChange}

@@ -6,9 +6,13 @@ const useForm = (callback) => {
 
     const handleChange = (event) => {
         event.persist(); 
-        
         setFormValue(event.target.value);
     };
+
+    const handleReplyChange = (event) => {
+        event.persist(); 
+        setFormValue({formValue, [event.target.name]: event.target.value});
+    } 
 
     const handleSubmit = (event, commentId = null) => {
         event.preventDefault();
@@ -16,7 +20,7 @@ const useForm = (callback) => {
         setFormValue("");
     };
 
-    return {formValue, handleChange, handleSubmit}
+    return {formValue, handleChange, handleSubmit, handleReplyChange}
 };
  
 export default useForm;
