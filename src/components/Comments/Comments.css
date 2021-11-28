@@ -17,6 +17,7 @@
 .commnets-map-div{
     margin-top: 16px;
     padding-left: 14px; 
+    padding-right: 10px;
 }
 
 .commnets-map-div-alt{
@@ -25,6 +26,7 @@
     padding-top: 14px;
     padding-bottom: 14px;
     padding-left: 14px;
+    padding-right: 10px;
 }
 
 .comments-likes-span{
@@ -56,4 +58,14 @@
     justify-items: end;
     justify-content: end;
     margin-top: 5px;
+}
+
+.comment-like-dislike-div {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    padding-bottom: 16px;
+}
+
+.reply-text{
+    padding-left: 40px;
 }

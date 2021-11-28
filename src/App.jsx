@@ -57,6 +57,29 @@ function App() {
           console.log(res.data.dislikes);
         });
   }
+ 
+  const addReplyLike = async(comments, reply) => {
+    await axios.put(`http://localhost:5000/api/comments/${comments._id}/replies/${reply._id}`, {
+            text: reply.text,
+            likes: reply.likes + 1,
+            dislikes: reply.dislikes
+        })
+        .then((res) => {
+          getAllComments();
+          console.log(res.data.replies);
+        });
+  }
+  const addReplyDislike = async(comments, reply) => {
+    await axios.put(`http://localhost:5000/api/comments/${comments._id}/replies/${reply._id}`, {
+            text: reply.text,
+            likes: reply.likes,
+            dislikes: reply.dislikes + 1
+        })
+        .then((res) => {
+          getAllComments();
+          console.log(res.data.replies);
+        });
+  }
 
   const getVideos = async () => {
     await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${userInput}&key=${API_KEY}&maxResults=6&order=viewCount&part=snippet`)
@@ -92,7 +115,7 @@ const getRelatedVideos = async () => {
         <div className="comments-margin-top">
           <h2>{title}</h2>
           <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
-          <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} getAllComments={getAllComments}/>
+          <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} getAllComments={getAllComments} addReplyDislike={addReplyDislike} addReplyLike={addReplyLike}/>
         </div>
       </div>
       
