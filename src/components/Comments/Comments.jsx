@@ -14,17 +14,17 @@ function Comments({
   addReplyDislike,
   addReplyLike,
 }) {
+    
   useEffect(() => {
     console.log(comments);
   }, [comments]);
 
-  const { formValue, handleChange, handleSubmit, handleReplyChange } = useForm(postReply);
+  const { formValue, replyValue, handleChange, handleSubmit, handleReplyChange } = useForm(postReply);
+  
 
   async function postReply(comment) {
     await axios
-      .post(`http://localhost:5000/api/comments/${comment._id}/replies`, {
-        text: formValue,
-      })
+      .post(`http://localhost:5000/api/comments/${comment._id}/replies`, replyValue)
       .then((res) => {
         console.log(res.data);
         getAllComments();
@@ -68,10 +68,11 @@ function Comments({
                 <form onSubmit={(event) => handleSubmit(event, comment)}>
                   <input
                     className="comment-form"
-                    name={comment._id}
+                    name="text"
+                    id={comment._id}
                     placeholder="Add a public reply..."
-                    value={formValue}
-                    onChange={handleChange}
+                    value={replyValue.text}
+                    onChange={(event)=>handleReplyChange(event)}
                     type="text"
                   />
                   <div className="comment-form-button">

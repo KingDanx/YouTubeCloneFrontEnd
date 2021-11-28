@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const useForm = (callback) => {
     const [formValue, setFormValue] = useState("");
+    const [replyValue, setReplyValue] = useState({});
 
 
     const handleChange = (event) => {
@@ -11,16 +12,21 @@ const useForm = (callback) => {
 
     const handleReplyChange = (event) => {
         event.persist(); 
-        setFormValue({formValue, [event.target.name]: event.target.value});
+        setReplyValue({
+           [event.target.name] : event.target.value
+        });
     } 
 
     const handleSubmit = (event, commentId = null) => {
         event.preventDefault();
         callback(commentId);
         setFormValue("");
+        setReplyValue({
+            text: "",
+        })
     };
 
-    return {formValue, handleChange, handleSubmit, handleReplyChange}
+    return {formValue, replyValue, handleChange, handleSubmit, handleReplyChange}
 };
  
 export default useForm;
