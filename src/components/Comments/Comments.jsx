@@ -29,7 +29,20 @@ function Comments({
     handleChange,
     handleSubmit,
     handleReplyChange,
+    setExpanded,
+    expanded,
+    setReplyValue,
+   
   } = useForm(postReply);
+
+
+    const handleAccordionChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+        setReplyValue({
+            text: "",
+        })
+      };
+    
 
   async function postReply(comment) {
     await axios
@@ -78,7 +91,7 @@ function Comments({
                   </div>
                 </div>{" "}
               </div>
-              <Accordion>
+              <Accordion expanded={expanded === 'panel1'+index} onFocus="this.select()" onChange={handleAccordionChange('panel1'+index)}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"

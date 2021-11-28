@@ -3,7 +3,7 @@ import { useState } from "react";
 const useForm = (callback) => {
     const [formValue, setFormValue] = useState("");
     const [replyValue, setReplyValue] = useState({});
-
+    const [expanded, setExpanded] = useState(true);
 
     const handleChange = (event) => {
         event.persist(); 
@@ -20,13 +20,14 @@ const useForm = (callback) => {
     const handleSubmit = (event, commentId = null) => {
         event.preventDefault();
         callback(commentId);
+        setExpanded(false);
         setFormValue("");
         setReplyValue({
             text: "",
         })
     };
 
-    return {formValue, replyValue, handleChange, handleSubmit, handleReplyChange}
+    return {formValue, replyValue, handleChange, handleSubmit, handleReplyChange, setExpanded, expanded, setReplyValue}
 };
  
 export default useForm;

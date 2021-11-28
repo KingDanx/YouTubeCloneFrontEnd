@@ -23,8 +23,6 @@ function App() {
   const [title, setTitle] = useState("Rick Astley - Never Gonna Give You Up (Official Music Video)");
   const handleClose = () => setOpen(false);
 
-//unshift to add to front of arr
-
   const getAllComments = async()=>{
     await axios.get(`http://localhost:5000/api/comments/`)
     .then((res) => {
