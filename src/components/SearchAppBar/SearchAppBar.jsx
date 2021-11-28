@@ -107,8 +107,9 @@ function SearchAppBar({
   const handleClick = (event, vid) => {
     event.preventDefault();
     setVideoId(vid.id.videoId);
-    handleClose();
     setAutoPlay(1);
+    handleClose();
+    
   };
 
   useEffect(() => {

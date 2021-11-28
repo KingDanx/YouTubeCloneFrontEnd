@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import Button from "@mui/material/Button";
-import useForm from "../../useForm";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ReplyMapper from "../ReplyMapper/ReplyMapper";
+import ReplyForm from "../ReplyForm/ReplyForm";
 
 function Comments({
   comments,
@@ -23,39 +22,12 @@ function Comments({
     console.log(comments);
   }, [comments]);
 
-  const {
-    formValue,
-    replyValue,
-    handleChange,
-    handleSubmit,
-    handleReplyChange,
-    setExpanded,
-    expanded,
-    setReplyValue,
-   
-  } = useForm(postReply);
+  const [expanded, setExpanded] = useState(true);
 
-
-    const handleAccordionChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-        setReplyValue({
-            text: "",
-        })
-      };
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    };
     
-
-  async function postReply(comment) {
-    await axios
-      .post(
-        `http://localhost:5000/api/comments/${comment._id}/replies`,
-        replyValue
-      )
-      .then((res) => {
-        console.log(res.data);
-        getAllComments();
-      });
-  }
-
   return (
     <div>
       {comments
@@ -91,7 +63,7 @@ function Comments({
                   </div>
                 </div>{" "}
               </div>
-              <Accordion expanded={expanded === 'panel1'+index} onFocus="this.select()" onChange={handleAccordionChange('panel1'+index)}>
+              <Accordion expanded={expanded === 'panel1'+index} onChange={handleAccordionChange('panel1'+index)}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
@@ -101,60 +73,11 @@ function Comments({
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
-                    <div>
-                      <form onSubmit={(event) => handleSubmit(event, comment)}>
-                        <input
-                          className="comment-form"
-                          name="text"
-                          id={comment._id}
-                          placeholder="Add a public reply..."
-                          value={replyValue.text}
-                          onChange={(event) => handleReplyChange(event)}
-                          type="text"
-                        />
-                        <div className="comment-form-button">
-                          <Button type="submit" variant="outlined">
-                            <b>Reply</b>
-                          </Button>
-                        </div>
-                      </form>
-                    </div>
+                      <ReplyForm commentId={comment._id} getAllComments={getAllComments} handleAccordionChange={handleAccordionChange} setExpanded={setExpanded}/>
                   </Typography>
                 </AccordionDetails>
               </Accordion>
-
-              <div>
-                {comment.replies
-                  .slice(0)
-                  .reverse()
-                  .map((reply, index) => (
-                    <div key={index} className="reply-text">
-                      <div className="comment-like-dislike-div ">
-                        <div>{reply.text}</div>
-                        <div>
-                          <div className="comments-button-right">
-                            <span className="comments-dislikes-span">
-                              {reply.dislikes}
-                            </span>
-                            <ThumbDownOffAltIcon
-                              className="comments-likes-button"
-                              onClick={() => addReplyDislike(comment, reply)}
-                            />
-                          </div>
-                          <div className="comments-button-right">
-                            <span className="comments-likes-span">
-                              {reply.likes}
-                            </span>
-                            <ThumbUpOffAltIcon
-                              className="comments-likes-button"
-                              onClick={() => addReplyLike(comment, reply)}
-                            />
-                          </div>
-                        </div>{" "}
-                      </div>
-                    </div>
-                  ))}
-              </div>
+              <ReplyMapper replies={comment.replies} commentId={comment._id} getAllComments={getAllComments}/>
             </div>
           ) : null
         )}

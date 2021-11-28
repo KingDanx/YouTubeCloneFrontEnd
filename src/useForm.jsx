@@ -2,32 +2,19 @@ import { useState } from "react";
 
 const useForm = (callback) => {
     const [formValue, setFormValue] = useState("");
-    const [replyValue, setReplyValue] = useState({});
-    const [expanded, setExpanded] = useState(true);
 
     const handleChange = (event) => {
         event.persist(); 
         setFormValue(event.target.value);
     };
 
-    const handleReplyChange = (event) => {
-        event.persist(); 
-        setReplyValue({
-           [event.target.name] : event.target.value
-        });
-    } 
-
-    const handleSubmit = (event, commentId = null) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        callback(commentId);
-        setExpanded(false);
+        callback();
         setFormValue("");
-        setReplyValue({
-            text: "",
-        })
     };
 
-    return {formValue, replyValue, handleChange, handleSubmit, handleReplyChange, setExpanded, expanded, setReplyValue}
+    return {formValue, handleChange, handleSubmit}
 };
  
 export default useForm;

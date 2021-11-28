@@ -21,7 +21,6 @@ function App() {
   const [related, setRelated] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = useState("Rick Astley - Never Gonna Give You Up (Official Music Video)");
-  const handleClose = () => setOpen(false);
 
   const getAllComments = async()=>{
     await axios.get(`http://localhost:5000/api/comments/`)
@@ -101,10 +100,10 @@ const getRelatedVideos = async () => {
 
   return (
     <div className="App">
-      <SearchAppBar title={title} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} handleClose={handleClose} setOpen={setOpen}/>
+      <SearchAppBar title={title} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} setOpen={setOpen}/>
       <div className="App-grid">
         <div className="App-video-player">
-          <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay}/>
+          <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} setAutoPlay={setAutoPlay}/>
         </div>
         <div className="App-related-video">
           <RelatedVideos title={title} setTitle={setTitle} related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 

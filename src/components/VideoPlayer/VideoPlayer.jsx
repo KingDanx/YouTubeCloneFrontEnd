@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./VideoPlayer.css";
 
-function VideoPlayer({ videoId, autoPlay}) {
+function VideoPlayer({ videoId, autoPlay, setAutoPlay}) {
 
   return (
     <div className="container">

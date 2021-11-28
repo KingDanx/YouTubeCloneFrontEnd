@@ -21,7 +21,7 @@ const CommentForm = ({videoId, getAllComments}) => {
 
     return ( 
         <form onSubmit={(event)=>handleSubmit(event)}>
-            <input className="comment-form" name="text" placeholder="Add a public comment..." value={formValue} onChange={handleChange} type="text" />
+            <input className="comment-form" name="text" placeholder="Add a public comment..." value={formValue} onChange={(event)=>handleChange(event)} type="text" />
             <div className="comment-form-button">
                 <Button type="submit" variant="outlined"><b>Comment</b></Button>
             </div>
