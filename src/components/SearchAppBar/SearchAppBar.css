@@ -17,6 +17,11 @@
 .search-left-img{
     width: 280px;
 }
+@media only screen and (max-height: 775px){
+    .search-left-img{
+            width: 225px;
+        }
+}
 
 .search-div-map{
     display: grid;
@@ -71,7 +76,7 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 70%;
-    height: 80%;
+    height: 91%!important;
     background-color: #333;
     color: white;
     border-radius: 40px;
