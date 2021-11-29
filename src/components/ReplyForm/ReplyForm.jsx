@@ -3,31 +3,10 @@ import useForm from '../../useForm';
 import axios from 'axios';
 import Button from "@mui/material/Button";
 
-const ReplyForm = ({commentId, getAllComments, setExpanded}) => {
-    
-    const {
-        formValue,
-        handleChange,
-        handleSubmit,       
-      } = useForm(postReply);
-          
-      async function postReply() {
-        await axios
-          .post(
-            `http://localhost:5000/api/comments/${commentId}/replies`, {
-                text: formValue,
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            getAllComments();
-            setExpanded(false);
-          });
-      }
-    
+const ReplyForm = ({formValue, handleSubmit, handleChange, commentId}) => {    
     return ( 
         <div>
-            <form onSubmit={(event) => handleSubmit(event)}>
+            <form onSubmit={(event) => handleSubmit(event, commentId)}>
                         <input
                           className="comment-form"
                           name="text"

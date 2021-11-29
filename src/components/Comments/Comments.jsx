@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ReplyMapper from "../ReplyMapper/ReplyMapper";
 import ReplyForm from "../ReplyForm/ReplyForm";
+import useForm from "../../useForm";
+import axios from "axios";
 
 function Comments({
   comments,
@@ -15,18 +17,43 @@ function Comments({
   addLike,
   addDislike,
   getAllComments,
-  addReplyDislike,
-  addReplyLike,
 }) {
+
+  const {
+    formValue,
+    handleChange,
+    handleSubmit,       
+    setFormValue,       
+  } = useForm(postReply);
+
   useEffect(() => {
     console.log(comments);
   }, [comments]);
 
   const [expanded, setExpanded] = useState(true);
 
+  async function postReply(comment) {
+    await axios
+      .post(
+        `http://localhost:5000/api/comments/${comment}/replies`, {
+            text: formValue,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        getAllComments();
+        setExpanded(false);
+      });
+  }
+
   const handleAccordionChange = (panel) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
+      console.log(formValue);
+      setFormValue("");
     };
+
+  
+    
     
   return (
     <div>
@@ -73,7 +100,7 @@ function Comments({
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
-                      <ReplyForm commentId={comment._id} getAllComments={getAllComments} handleAccordionChange={handleAccordionChange} setExpanded={setExpanded}/>
+                      <ReplyForm formValue={formValue} handleSubmit={handleSubmit} handleChange={handleChange} postReply={postReply} commentId={comment._id} getAllComments={getAllComments} setExpanded={setExpanded}/>
                   </Typography>
                 </AccordionDetails>
               </Accordion>

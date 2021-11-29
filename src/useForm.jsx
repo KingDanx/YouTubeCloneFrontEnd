@@ -8,13 +8,13 @@ const useForm = (callback) => {
         setFormValue(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event, comment=null) => {
         event.preventDefault();
-        callback();
+        callback(comment);
         setFormValue("");
     };
 
-    return {formValue, handleChange, handleSubmit}
+    return {formValue, handleChange, handleSubmit, setFormValue}
 };
  
 export default useForm;
