@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
 
-const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId, setTitle}) => {
+const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, videoId, setTitle, multiSet}) => {
   
     const handelSubmit = (event, vid) => {
     event.preventDefault();
@@ -17,7 +17,7 @@ const RelatedVideos = ({ related, setVideoId, setAutoPlay, getRelatedVideos, vid
   return (
     <div>
       {related.map((vid, i) =>
-        !vid.snippet ? null : vid.id.videoId === videoId ? setTitle(vid.snippet.title) : (
+        !vid.snippet ? null : vid.id.videoId === videoId ? multiSet(vid) : (
           <div
             key={i}
             onClick={(event) => handelSubmit(event, vid)}

@@ -84,7 +84,8 @@ function SearchAppBar({
   getRelatedVideos,
   videoId,
   setTitle,
-  title
+  multiSet,
+  setDescription,
 }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -111,6 +112,8 @@ function SearchAppBar({
     handleClose();
     
   };
+
+ 
 
   useEffect(() => {
     getRelatedVideos();
@@ -166,7 +169,7 @@ function SearchAppBar({
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className="search-div-map">
-              {results.map((vid, i) => vid.id.videoId === videoId ? setTitle(vid.snippet.title) : (
+              {results.map((vid, i) => vid.id.videoId === videoId ? multiSet(vid)  : (
                 <div
                   key={i}
                   style={{ cursor: "pointer" }}

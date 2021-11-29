@@ -21,6 +21,7 @@ function App() {
   const [related, setRelated] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = useState("Rick Astley - Never Gonna Give You Up (Official Music Video)");
+  const [description, setDescription] = useState("The official video for “Never Gonna Give You Up” by Rick Astley");
 
   const getAllComments = async()=>{
     await axios.get(`http://localhost:5000/api/comments/`)
@@ -94,23 +95,29 @@ const getRelatedVideos = async () => {
     });
 }
 
+const multiSet = (vid) => {
+  setTitle(vid.snippet.title);
+  setDescription(vid.snippet.description);
+}
+
   useEffect(() => {
     getAllComments(); 
   }, []);
 
   return (
     <div className="App">
-      <SearchAppBar title={title} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} setOpen={setOpen}/>
+      <SearchAppBar multiSet={multiSet} setTitle={setTitle} userInput={userInput} setUserInput={setUserInput} getVideos={getVideos} results={results} videoId={videoId} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} setOpen={setOpen}/>
       <div className="App-grid">
         <div className="App-video-player">
           <VideoPlayer videoId={videoId} results={results} autoPlay={autoPlay} setAutoPlay={setAutoPlay}/>
         </div>
         <div className="App-related-video">
-          <RelatedVideos title={title} setTitle={setTitle} related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 
+          <RelatedVideos multiSet={multiSet} title={title} setTitle={setTitle} related={related} setVideoId={setVideoId} setAutoPlay={setAutoPlay} getRelatedVideos={getRelatedVideos} videoId={videoId}/> 
         </div>
         
         <div className="comments-margin-top">
           <h2>{title}</h2>
+          <h5>{description}</h5>
           <CommentForm videoId={videoId} setComments={setComments} getAllComments={getAllComments}/>
           <Comments comments={comments} videoId={videoId} addLike={addLike} addDislike={addDislike} getAllComments={getAllComments} addReplyDislike={addReplyDislike} addReplyLike={addReplyLike}/>
         </div>
